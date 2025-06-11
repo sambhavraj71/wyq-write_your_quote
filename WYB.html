@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WYB - Write Your Blogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #800000;
+            --secondary-color: #2A2A2A;
+            --accent-color: #FFFFFF;
+            --light-color: #FFFFFF;
+            --dark-color: #2A2A2A;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+            --text-light: #FFFFFF;
+            --text-dark: #2A2A2A;
+            --gradient-primary: linear-gradient(135deg, #800000 0%, #2A2A2A 100%);
+            --gradient-accent: linear-gradient(135deg, #800000 0%, #FFFFFF 100%);
+            --font-main: 'Merriweather', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Montserrat', 'Arial Narrow Bold', sans-serif;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+            --border-radius: 20px;
+            --border-radius-sm: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background-color: #FFFFFF;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(128, 0, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 20%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 1.8rem;
+            color: var(--text-dark);
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(42, 42, 42, 0.05);
+        }
+
+        .heading {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .heading span {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .nav-area {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.9rem 1.8rem 0.9rem 3rem;
+            border: none;
+            border-radius: 50px;
+            width: 240px;
+            background: rgba(42, 42, 42, 0.03);
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-input::placeholder {
+            color: rgba(42, 42, 42, 0.4);
+        }
+
+        .search-input:focus {
+            width: 300px;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            opacity: 0.7;
+            font-size: 1.5rem;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.6rem;
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+        }
+
+        .nav-icon:hover {
+            background: rgba(128, 0, 0, 0.1);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .user-greeting {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-greeting span {
+            font-weight: 500;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        button, .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        button:hover, .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        button:active, .btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 5px 15px rgba(128, 0, 0, 0.4);
+        }
+
+        .logout-btn {
+            background: var(--gradient-accent);
+            color: var(--secondary-color);
+        }
+
+        .logout-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+            position: relative;
+            background: linear-gradient(135deg, rgba(128, 0, 0, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23800000" fill-opacity="0.1" d="M0,192L48,202.7C96,213,192,235,288,224C384,213,480,171,576,149.3C672,128,768,128,864,149.3C960,171,1056,213,1152,213.3C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E') no-repeat bottom;
+            z-index: -1;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding: 2rem;
+            max-width: 50%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+
+        .auth-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 450px;
+            margin: 2rem 0;
+            position: relative;
+            backdrop-filter: blur(5px);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .auth-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .auth-form h2 {
+            font-size: 2rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1.2rem;
+            border: 1px solid rgba(42, 42, 42, 0.1);
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-main);
+            font-size: 1.1rem;
+            transition: var(--transition);
+            background: rgba(42, 42, 42, 0.02);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
+            background: white;
+        }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 1.8rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .form-toggle a {
+            color: black;
+            font-weight: 600;
+        }
+
+        .hero-carousel {
+            flex: 1;
+            width: 50%;
+            height: 500px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            animation: fadeInRight 0.8s ease-out;
+        }
+
+        .hero-carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .carousel-images img.active {
+            opacity: 1;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-indicator.active {
+            background: var(--primary-color);
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.8rem;
+            margin-top: 2.5rem;
+        }
+
+        .stats div {
+            background: white;
+            padding: 1.2rem 1.8rem;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .stats i {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .Blogs-area {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.5rem;
+            margin: 4rem 0;
+        }
+
+        .all-blogs, .user-blogs {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 2.5rem;
+            transition: var(--transition);
+        }
+
+        .all-blogs:hover, .user-blogs:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .blog-card {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(42, 42, 42, 0.05);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateX(5px);
+        }
+
+        .blog-card:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .blog-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.9rem;
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover .blog-title {
+            color: var(--primary-color);
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1.8rem;
+            color: rgba(42, 42, 42, 0.6);
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .blog-meta i {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+        }
+
+        .blog-excerpt {
+            color: rgba(42, 42, 42, 0.7);
+            margin-bottom: 1.2rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .read-more {
+            font-weight: 600;
+            color: var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .read-more i {
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--accent-color);
+        }
+
+        .read-more:hover i {
+            transform: translateX(3px);
+        }
+
+        .userarea {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin: 4rem 0;
+        }
+
+        .newblog, .notification {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 2.5rem;
+            transition: var(--transition);
+        }
+
+        .newblog:hover, .notification:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .notification-item {
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(128, 0, 0, 0.03);
+            margin-bottom: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .notification-item:hover {
+            transform: translateX(5px);
+            background: rgba(128, 0, 0, 0.08);
+        }
+
+        .notification-item.unread {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--accent-color);
+        }
+
+        .notification-time {
+            font-size: 0.9rem;
+            color: rgba(42, 42, 42, 0.5);
+            margin-top: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 1.2rem 0;
+        }
+
+        .tag {
+            background: rgba(128, 0, 0, 0.1);
+            color: var(--primary-color);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        footer {
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 4rem 0 2rem;
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary-color);
+        }
+        .footer-section p{
+            color: white;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-light);
+            opacity: 0.8;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul li a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.9rem;
+            border: none;
+            border-radius: 50px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .newsletter-btn {
+            padding: 0.9rem 1.8rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50px;
+            font-size: 1.1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            font-size: 1.8rem;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content h1 { font-size: 3.5rem; }
+            .hero-carousel { height: 400px; }
+        }
+
+        @media (max-width: 768px) {
+            .Blogs-area, .userarea { grid-template-columns: 1fr; }
+            .hero { flex-direction: column; text-align: center; padding: 3rem 0; }
+            .hero-content { padding: 1rem; max-width: 100%; }
+            .hero-carousel { width: 100%; height: 350px; }
+            .auth-form { max-width: 100%; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+            header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
+            .nav-area { width: 100%; flex-direction: column; gap: 1rem; }
+            .search-input, .search-container { width: 100%; }
+            .search-input:focus { width: 100%; }
+        }
+
+        @media (max-width: 479px) {
+            .container { padding: 0 1rem; }
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-carousel { height: 300px; }
+            .auth-form { padding: 2rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-form input, .newsletter-btn { width: 100%; }
+        }
+
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+        .mt-4 { margin-top: 4rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+        .mb-4 { margin-bottom: 4rem; }
+        .pulse { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="heading">WYB - <span>Write Your Blogs</span></div>
+        <div class="nav-area">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search blogs...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="nav-icons">
+                <i class="fas fa-headset nav-icon" title="Support"></i>
+                <i class="fas fa-info-circle nav-icon" title="About Us"></i>
+            </div>
+            <div class="user-greeting" id="userGreeting">
+                <span>Welcome, <span id="displayUsername"></span>!</span>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero" id="heroSection">
+        <div class="hero-content">
+            <h1 id="welcomeMessage">Welcome to WYB!</h1>
+            <p id="userStats">Join our community to share your stories and insights.</p>
+            <div id="authContainer">
+                <div class="auth-form" id="loginForm">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" id="loginUsername" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter password" required>
+                    </div>
+                    <button class="submit-btn" id="loginSubmit">Login</button>
+                    <div class="form-toggle">
+                        <p>Don't have an account? <a id="showSignup">Sign Up</a></p>
+                    </div>
+                </div>
+                <div class="auth-form" id="signupForm" style="display: none;">
+                    <h2>Sign Up</h2>
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" placeholder="Enter full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupUsername">Username</label>
+                        <input type="text" id="signupUsername" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" placeholder="Enter password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileImageUpload">Profile Image</label>
+                        <input type="file" id="profileImageUpload" accept="image/*">
+                    </div>
+                    <button class="submit-btn" id="signupSubmit">Sign Up</button>
+                    <div class="form-toggle">
+                        <p>Already have an account? <a id="showLogin">Login</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="stats" id="statsContainer"></div>
+        </div>
+        <div class="hero-carousel" id="heroCarousel">
+            <div class="carousel-images">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" alt="Blog Image 1" class="active" onerror="this.src='https://via.placeholder.com/800x500?text=Blog+Image+1';">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Blog Image 2" onerror="this.src='https://via.placeholder.com/800x500?text=Blog+Image+2';">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" alt="Blog Image 3" onerror="this.src='https://via.placeholder.com/800x500?text=Blog+Image+3';">
+            </div>
+            <div class="carousel-indicators">
+                <span class="carousel-indicator active"></span>
+                <span class="carousel-indicator"></span>
+                <span class="carousel-indicator"></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="Blogs-area" id="blogsArea">
+        <div class="all-blogs">
+            <h2>Recent Blogs</h2>
+            <div id="allBlogsContainer"></div>
+        </div>
+        <div class="user-blogs" id="userBlogsContainer">
+            <h2>Your Recent Blogs</h2>
+            <div id="userBlogsContent">
+                <p>Please login to view your blogs.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="userarea" id="userAreaSection">
+        <div class="newblog">
+            <h2>Create New Blog</h2>
+            <form id="blogForm">
+                <div class="form-group">
+                    <label for="blog-title">Title</label>
+                    <input type="text" id="blog-title" placeholder="Enter your blog title" required>
+                </div>
+                <div class="form-group">
+                    <label for="blog-content">Content</label>
+                    <textarea id="blog-content" placeholder="Write your blog content here..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="blog-tags">Tags (comma separated)</label>
+                    <input type="text" id="blog-tags" placeholder="webdev, javascript, css">
+                </div>
+                <button type="submit" class="submit-btn">Publish Blog</button>
+            </form>
+        </div>
+        <div class="notification">
+            <h2>Notifications</h2>
+            <div id="notificationsContainer">
+                <p>Please login to view notifications.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About WYB</h4>
+                <p>Write Your Blogs is a platform for sharing your thoughts, ideas, and expertise with the world. Join our community of writers today!</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#heroSection">Home</a></li>
+                    <li><a href="#blogsArea">Blogs</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: sambhavraj83@gmail.com</p>
+                <p>Phone: +91 7361065324</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Stay updated with our latest blogs and features.</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                    <button type="submit" class="submit-btn newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 WYB - Write Your Blogs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const users = [
+            {
+                id: 1,
+                username: "sambhavraj71",
+                password: "sambhavraj",
+                name: "Sambhav Raj",
+                profileImage: "Sambhav.jpg",
+                blogs: [
+                    {
+                        id: 101,
+                        title: "Mastering CSS Grid Layout",
+                        content: "A comprehensive guide to CSS Grid Layout with practical examples for creating modern web layouts...",
+                        date: "2025-06-10",
+                        views: 324,
+                        tags: ["css", "webdesign"]
+                    },
+                    {
+                        id: 102,
+                        title: "JavaScript Performance Optimization",
+                        content: "Tips and techniques to optimize your JavaScript code for better performance and faster page loads...",
+                        date: "2025-06-05",
+                        views: 587,
+                        tags: ["javascript", "performance"]
+                    }
+                ],
+                stats: {
+                    totalBlogs: 15,
+                    totalViews: 1245,
+                    lastBlogDate: "1 days ago"
+                }
+            },
+            {
+                id: 2,
+                username: "jane_smith",
+                password: "password123",
+                name: "Jane Smith",
+                profileImage: "https://randomuser.me/api/portraits/women/44.jpg",
+                blogs: [
+                    {
+                        id: 201,
+                        title: "React Hooks Explained",
+                        content: "Understanding React Hooks and how they can simplify your component logic...",
+                        date: "2023-06-12",
+                        views: 215,
+                        tags: ["react", "javascript"]
+                    }
+                ],
+                stats: {
+                    totalBlogs: 8,
+                    totalViews: 876,
+                    lastBlogDate: "1 day ago"
+                }
+            }
+        ];
+
+        const allBlogs = [
+            {
+                id: 301,
+                title: "Getting Started with React Hooks",
+                author: "Sarah Johnson",
+                content: "Learn how to use React Hooks to simplify your functional components and manage state effectively without writing classes...",
+                date: "2025-06-10",
+                comments: 12,
+                tags: ["react", "javascript"]
+            },
+            {
+                id: 302,
+                title: "The Future of Web Development in 2023",
+                author: "Michael Chen",
+                content: "Exploring the emerging trends and technologies that will shape web development in the coming year, from WASM to edge computing...",
+                date: "2025-06-09",
+                comments: 8,
+                tags: ["webdev", "trends"]
+            },
+            {
+                id: 303,
+                title: "TypeScript Best Practices",
+                author: "David Wilson",
+                content: "How to write clean, maintainable TypeScript code with these best practices and patterns...",
+                date: "2025-06-09",
+                comments: 5,
+                tags: ["typescript", "javascript"]
+            }
+        ];
+
+        const notifications = {
+            sambhavraj71: [
+                {
+                    type: "comment",
+                    message: "commented on your blog 'Mastering CSS Grid Layout'",
+                    user: "Sarah Johnson",
+                    content: "Great tutorial! The grid examples were really helpful.",
+                    time: "2 hours ago",
+                    read: false
+                },
+                {
+                    type: "like",
+                    message: "liked your blog 'JavaScript Performance Optimization'",
+                    user: "Jane Smith",
+                    time: "1 day ago",
+                    read: false
+                },
+                {
+                    type: "view",
+                    message: "Your blog 'Getting Started with Vue.js' has reached 1000 views",
+                    time: "3 days ago",
+                    read: true
+                },
+                {
+                    type: "quote",
+                    message: "quoted your blog in their post",
+                    user: "Michael Chen",
+                    content: "As John Doe mentioned in his excellent post about CSS Grid...",
+                    time: "5 days ago",
+                    read: true
+                }
+            ],
+            jane_smith: [
+                {
+                    type: "comment",
+                    message: "commented on your blog 'React Hooks Explained'",
+                    user: "Alex Turner",
+                    content: "Thanks for the clear explanation of useEffect!",
+                    time: "4 hours ago",
+                    read: false
+                },
+                {
+                    type: "like",
+                    message: "liked your blog 'React Hooks Explained'",
+                    user: "John Doe",
+                    time: "1 day ago",
+                    read: true
+                },
+                {
+                    type: "quote",
+                    message: "referenced your blog in their post",
+                    user: "David Wilson",
+                    content: "Building on Jane Smith's React Hooks article, let's explore custom hooks...",
+                    time: "2 days ago",
+                    read: false
+                }
+            ]
+        };
+
+        const userQuotes = {
+            sambhavraj71: [
+                {
+                    user: "Sarah Johnson",
+                    content: "Sambhav's article on CSS Grid completely changed how I approach layouts!",
+                    time: "1 week ago"
+                },
+                {
+                    user: "Michael Chen",
+                    content: "I always recommend Sambhav's performance optimization guide to my students.",
+                    time: "2 weeks ago"
+                }
+            ],
+            jane_smith: [
+                {
+                    user: "Alex Turner",
+                    content: "Jane's React tutorials are the clearest I've found online.",
+                    time: "5 days ago"
+                },
+                {
+                    user: "David Wilson",
+                    content: "Jane's approach to teaching hooks is brilliant - so practical!",
+                    time: "1 week ago"
+                }
+            ]
+        };
+
+        const searchInput = document.getElementById('searchInput');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const showSignup = document.getElementById('showSignup');
+        const showLogin = document.getElementById('showLogin');
+        const loginSubmit = document.getElementById('loginSubmit');
+        const signupSubmit = document.getElementById('signupSubmit');
+        const authContainer = document.getElementById('authContainer');
+        const userGreeting = document.getElementById('userGreeting');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const displayUsername = document.getElementById('displayUsername');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const userStats = document.getElementById('userStats');
+        const statsContainer = document.getElementById('statsContainer');
+        const heroCarousel = document.getElementById('heroCarousel');
+        const allBlogsContainer = document.getElementById('allBlogsContainer');
+        const userBlogsContainer = document.getElementById('userBlogsContainer');
+        const userBlogsContent = document.getElementById('userBlogsContent');
+        const notificationsContainer = document.getElementById('notificationsContainer');
+        const blogForm = document.getElementById('blogForm');
+        const newsletterForm = document.getElementById('newsletterForm');
+        const blogsArea = document.getElementById('blogsArea');
+        const userAreaSection = document.getElementById('userAreaSection');
+
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                checkLoggedInUser();
+                renderAllBlogs();
+                startCarousel();
+                observeSections();
+            } catch (error) {
+                console.error('Initialization error:', error);
+                alert('An error occurred while loading the page. Please try again.');
+            }
+        });
+
+        function checkLoggedInUser() {
+            const loggedInUser = localStorage.getItem('wyb_currentUser');
+            if (loggedInUser) {
+                try {
+                    currentUser = JSON.parse(loggedInUser);
+                    if (currentUser && currentUser.username) {
+                        showUserInterface();
+                    } else {
+                        showLoginInterface();
+                    }
+                } catch (error) {
+                    console.error('Error parsing logged-in user:', error);
+                    showLoginInterface();
+                }
+            } else {
+                showLoginInterface();
+            }
+        }
+
+        function showLoginInterface() {
+            if (!userGreeting || !welcomeMessage || !userStats || !statsContainer || !userBlogsContent || !notificationsContainer || !blogForm || !authContainer || !loginForm || !signupForm || !heroCarousel) {
+                console.error('Missing DOM elements in showLoginInterface');
+                return;
+            }
+            userGreeting.style.display = 'none';
+            welcomeMessage.textContent = 'Welcome to WYB!';
+            userStats.textContent = 'Join our community to share your stories and insights.';
+            statsContainer.innerHTML = '';
+            userBlogsContent.innerHTML = '<p>Please login to view your blogs.</p>';
+            notificationsContainer.innerHTML = '<p>Please login to view notifications.</p>';
+            blogForm.style.display = 'none';
+            authContainer.style.display = 'block';
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            heroCarousel.innerHTML = `
+                <div class="carousel-images">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" alt="Blog Image 1" class="active" onerror="this.src='https://via.placeholder.com/800x500?text=Blog+Image+1';">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Blog Image 2" onerror="this.src='https://via.placeholder.com/800x500?text=Blog+Image+2';">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" alt="Blog Image 3" onerror="this.src='https://via.placeholder.com/800x500?text=Blog+Image+3';">
+                </div>
+                <div class="carousel-indicators">
+                    <span class="carousel-indicator active"></span>
+                    <span class="carousel-indicator"></span>
+                    <span class="carousel-indicator"></span>
+                </div>
+            `;
+            startCarousel();
+        }
+
+        function showUserInterface() {
+            if (!currentUser || !userGreeting || !displayUsername || !welcomeMessage || !userStats || !statsContainer || !heroCarousel || !authContainer || !blogForm) {
+                console.error('Missing DOM elements or currentUser in showUserInterface');
+                return;
+            }
+            userGreeting.style.display = 'flex';
+            displayUsername.textContent = currentUser.name;
+            welcomeMessage.textContent = `Welcome back, ${currentUser.name}!`;
+            userStats.textContent = `You've written ${currentUser.stats.totalBlogs} blogs with ${currentUser.stats.totalViews} total views. Last blog: ${currentUser.stats.lastBlogDate}.`;
+            statsContainer.innerHTML = `
+                <div><i class="fas fa-eye"></i> ${Math.floor(currentUser.stats.totalViews/7)} views this month</div>
+                <div><i class="fas fa-heart"></i> ${Math.floor(currentUser.stats.totalViews/6)} likes</div>
+            `;
+            heroCarousel.innerHTML = `<img src="${currentUser.profileImage || 'https://via.placeholder.com/300?text=Profile'}" alt="Profile Image" onerror="this.src='https://via.placeholder.com/800x500?text=Profile';">`;
+            authContainer.style.display = 'none';
+            renderUserBlogs();
+            renderNotifications();
+            blogForm.style.display = 'block';
+        }
+
+        function renderAllBlogs() {
+            if (!allBlogsContainer) {
+                console.error('Missing allBlogsContainer');
+                return;
+            }
+            allBlogsContainer.innerHTML = '';
+            allBlogs.forEach(blog => {
+                const blogElement = document.createElement('div');
+                blogElement.className = 'blog-card';
+                blogElement.innerHTML = `
+                    <h3 class="blog-title">${blog.title || 'Untitled'}</h3>
+                    <div class="blog-meta">
+                        <span><i class="fas fa-user"></i> ${blog.author || 'Unknown'}</span> |
+                        <span><i class="fas fa-calendar-alt"></i> ${blog.date || 'N/A'}</span> |
+                        <span><i class="fas fa-comment"></i> ${blog.comments || 0} comments</span>
+                    </div>
+                    <p class="blog-excerpt">${blog.content ? blog.content.substring(0, 150) + '...' : 'No content'}</p>
+                    <a href="#" class="read-more">Read More →</a>
+                `;
+                allBlogsContainer.appendChild(blogElement);
+            });
+        }
+
+        function renderUserBlogs() {
+            if (!userBlogsContent || !currentUser) {
+                console.warn('Missing userBlogsContent or currentUser');
+                return;
+            }
+            userBlogsContent.innerHTML = '';
+            if (currentUser.blogs && currentUser.blogs.length > 0) {
+                currentUser.blogs.forEach(blog => {
+                    const blogElement = document.createElement('div');
+                    blogElement.className = 'blog-card';
+                    blogElement.innerHTML = `
+                        <h3 class="blog-title">${blog.title || 'Untitled'}</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar-alt"></i> ${blog.date || 'N/A'}</span> |
+                            <span><i class="fas fa-eye"></i> ${blog.views || 0} views</span>
+                        </div>
+                        <p class="blog-excerpt">${blog.content ? blog.content.substring(0, 150) + '...' : 'No content'}</p>
+                        <a href="#" class="read-more">Edit Blog →</a>
+                    `;
+                    userBlogsContent.appendChild(blogElement);
+                });
+            } else {
+                userBlogsContent.innerHTML = '<p>You haven\'t written any blogs yet. Create your first blog below!</p>';
+            }
+        }
+
+        function renderNotifications() {
+            if (!notificationsContainer) {
+                console.error('Missing notificationsContainer');
+                return;
+            }
+            notificationsContainer.innerHTML = '';
+            if (!currentUser || !currentUser.username || !notifications[currentUser.username]) {
+                notificationsContainer.innerHTML = '<p>Please login to view notifications.</p>';
+                return;
+            }
+
+            const userNotifications = notifications[currentUser.username];
+            userNotifications.forEach(notification => {
+                const notificationElement = document.createElement('div');
+                notificationElement.className = `notification-item ${notification.read ? '' : 'unread'}`;
+                let notificationContent = '';
+                if (notification.type === 'comment') {
+                    notificationContent = `
+                        <p><strong>${notification.user || 'Anonymous'}</strong> ${notification.message || 'commented on your blog'}</p>
+                        <p>"${notification.content || 'No comment content'}"}"</p>
+                        <p class="notification-time"><i class="fas fa-clock"></i> ${notification.time || 'N/A'}</p>
+                    `;
+                } else if (notification.type === 'like') {
+                    notificationContent = `
+                        <p><strong>${notification.user || 'Anonymous'}</strong> ${notification.message || 'liked your blog'}</p>
+                        <p class="notification-time"><i class="fas fa-clock"></i> ${notification.time || 'N/A'}</p>
+                    `;
+                } else if (notification.type === 'view') {
+                    notificationContent = `
+                        <p><strong>${notification.message || 'View milestone'}</strong></p>
+                        <p class="notification-time"><i class="fas fa-clock"></i> ${notification.time || 'N/A'}</p>
+                    `;
+                } else if (notification.type === 'quote') {
+                    notificationContent = `
+                        <p><strong>${notification.user || 'Unknown'}</strong> ${notification.message || 'quoted your blog'}</p>
+                        <p>"${notification.content || 'No quote content'}</p>
+                        <p class="notification-time"><i class="fas fa-clock"></i> ${notification.time || 'N/A'}</p>
+                    `;
+                }
+                notificationElement.innerHTML = notificationContent;
+                notificationElement.addEventListener('click', function() {
+                    this.classList.remove('unread');
+                    notification.read = true;
+                });
+                notificationsContainer.appendChild(notificationElement);
+            });
+
+            const quotesHeader = document.createElement('h3');
+            quotesHeader.textContent = 'What Others Say About You';
+            quotesHeader.style.marginTop = '2rem';
+            quotesHeader.style.borderBottom = '1px solid rgba(42, 42, 42, 0.1)';
+            quotesHeader.style.paddingBottom = '0.5rem';
+            notificationsContainer.appendChild(quotesHeader);
+
+            if (userQuotes[currentUser.username]) {
+                userQuotes[currentUser.username].forEach(quote => {
+                    const quoteElement = document.createElement('div');
+                    quoteElement.className = 'notification-item';
+                    quoteElement.innerHTML = `
+                        <p><strong>${quote.user || 'Anonymous'}</strong> said:</p>
+                        <p>"${quote.content || 'No quote content'}</p>
+                        <p class="notification-time"><i class="fas fa-clock"></i> ${quote.time || 'N/A'}</p>
+                    `;
+                    notificationsContainer.appendChild(quoteElement);
+                });
+            }
+        }
+
+        loginSubmit.addEventListener('click', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            if (username && password) {
+                const user = users.find(u => u.username === username && u.password === password);
+                if (user) {
+                    currentUser = user;
+                    localStorage.setItem('wyb_currentUser', JSON.stringify(user));
+                    showUserInterface();
+                } else {
+                    alert('Invalid username or password');
+                }
+            } else {
+                alert('Please enter both username and password');
+            }
+        });
+
+        signupSubmit.addEventListener('click', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+            const imageFile = document.getElementById('profileImageUpload').files[0];
+            if (name && username && password) {
+                if (users.find(u => u.username === username)) {
+                    alert('Username already exists');
+                    return;
+                }
+                let profileImageUrl = "https://randomuser.me/api/portraits/lego/1.jpg";
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profileImageUrl = e.target.result;
+                        createNewUser(name, username, password, profileImageUrl);
+                    };
+                    reader.onerror = function() {
+                        console.error('Error reading profile image');
+                        createNewUser(name, username, password, profileImageUrl);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    createNewUser(name, username, password, profileImageUrl);
+                }
+            } else {
+                alert('Please fill all fields');
+            }
+        });
+
+        function createNewUser(name, username, password, profileImageUrl) {
+            const newUser = {
+                id: users.length + 1,
+                username,
+                password,
+                name,
+                profileImage: profileImageUrl,
+                blogs: [],
+                stats: {
+                    totalBlogs: 0,
+                    totalViews: 0,
+                    lastBlogDate: "never"
+                }
+            };
+            users.push(newUser);
+            currentUser = newUser;
+            localStorage.setItem('wyb_currentUser', JSON.stringify(currentUser));
+            showUserInterface();
+            alert('Account created successfully!');
+        }
+
+        showSignup.addEventListener('click', () => {
+            if (loginForm && signupForm) {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            }
+        });
+
+        showLogin.addEventListener('click', () => {
+            if (signupForm && loginForm) {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }
+        });
+
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const allBlogs = document.querySelectorAll('.blog-card');
+            allBlogs.forEach(blog => {
+                const title = blog.querySelector('.blog-title')?.textContent.toLowerCase() || '';
+                const content = blog.querySelector('.blog-excerpt')?.textContent.toLowerCase() || '';
+                if (title.includes(query) || content.includes(query)) {
+                    blog.style.display = 'block';
+                } else {
+                    blog.style.display = 'none';
+                }
+            });
+        });
+
+        logoutBtn.addEventListener('click', function() {
+            currentUser = null;
+            localStorage.removeItem('wyb_currentUser');
+            showLoginInterface();
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+        });
+
+        blogForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('blog-title').value;
+            const content = document.getElementById('blog-content').value;
+            const tags = document.getElementById('blog-tags').value.split(',').map(tag => tag.trim());
+            if (title && content && currentUser) {
+                const newBlog = {
+                    id: Date.now(),
+                    title,
+                    content,
+                    date: new Date().toISOString().split('T')[0],
+                    views: 0,
+                    tags
+                };
+                currentUser.blogs.unshift(newBlog);
+                currentUser.stats.totalBlogs++;
+                localStorage.setItem('wyb_currentUser', JSON.stringify(currentUser));
+                blogForm.reset();
+                alert('Blog published successfully!');
+                renderUserBlogs();
+                userStats.textContent = `You've written ${currentUser.stats.totalBlogs} blogs with ${currentUser.stats.totalViews} total views. Last blog: today.`;
+            } else {
+                alert('Please fill in title and content, or login');
+            }
+        });
+
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('newsletterEmail').value;
+            if (email) {
+                alert('Thank you for subscribing to our newsletter!');
+                newsletterForm.reset();
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+
+        function startCarousel() {
+            const images = document.querySelectorAll('.carousel-images img');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            if (!images.length || !indicators.length) {
+                console.warn('Carousel elements missing');
+                return;
+            }
+            let currentIndex = 0;
+
+            function showImage(index) {
+                images.forEach(img => img.classList.remove('active'));
+                indicators.forEach(ind => ind.classList.remove('active'));
+                if (images[index]) {
+                    images[index].classList.add('active');
+                    indicators[index].classList.add('active');
+                }
+            }
+
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % images.length;
+                showImage(currentIndex);
+            }
+
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    showImage(index);
+                });
+            });
+
+            setInterval(nextImage, 6000);
+        }
+
+        function observeSections() {
+            const sections = document.querySelectorAll('section, footer');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => {
+                section.classList.add('section-hidden');
+                observer.observe(section);
+            });
+        }
+
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            .section-hidden {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease-out, transform: 0.6s ease-out;
+            }
+            .section-hidden.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
